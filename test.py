@@ -1,2 +1,2 @@
-a = 'Veronika'
+a = 10
 print (a)
