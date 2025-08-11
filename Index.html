@@ -1,0 +1,341 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>METANIT.COM</title>
+    <style>
+    #blueRect{
+        width:100px;
+        height:100px;
+        background-color:blue;
+    }
+    #redRect{
+        width:50px;
+        height:50px;
+        background-color:red;
+    }
+    </style>
+</head>
+<body>
+    <div id="blueRect">
+        <div id="redRect"></div>
+    </div>
+    <script>
+    const redRect = document.getElementById("redRect");
+    redRect.addEventListener("click", () => console.log("Событие на redRect"));
+     
+    const blueRect = document.getElementById("blueRect");
+    blueRect.addEventListener("click", ()=>console.log("Событие на blueRect"));
+     
+    document.body.addEventListener("click", () => console.log("Событие на body"));
+    </script>
+</body>
+</html> -->
+
+
+<!-- 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <style>
+    #blueRect{
+        width:100px;
+        height:100px;
+        background-color:blue;
+    }
+    </style>
+</head>
+<body>
+<div id="blueRect"></div>
+ 
+<script>
+function handleClick(e){
+    console.log("screenX: " + e.screenX);
+    console.log("screenY: " + e.screenY);
+    console.log("clientX: " + e.clientX);
+    console.log("clientY: " + e.clientY);
+}
+const blueRect = document.getElementById("blueRect");
+blueRect.addEventListener("click", handleClick);
+</script>
+</body>
+</html> -->
+
+<!-- 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>METANIT.COM</title>
+    <style>
+    #blueRect{
+        width:100px;
+        height:100px;
+        background-color:blue;
+    }
+    </style>
+</head>
+<body>
+<div id="blueRect"></div>
+ 
+<script>
+const blueRect = document.getElementById("blueRect");
+// получаем стиль для blueRect
+const blueRectStyle = window.getComputedStyle(blueRect);
+// устанавливаем обработчик нажатия клавиши
+window.addEventListener("keydown", moveRect);
+function moveRect(e){
+    const left = parseInt(blueRectStyle.marginLeft); //смещение от левого края
+    const top = parseInt(blueRectStyle.marginTop);  // смещения от левой границы
+     
+    switch(e.key){
+         
+        case "ArrowLeft":  // если нажата клавиша влево
+            if(left>0)
+                blueRect.style.marginLeft = left - 10 + "px";
+            break;
+        case "ArrowUp":   // если нажата клавиша вверх
+            if(top>0)
+                blueRect.style.marginTop = top - 10 + "px";
+            break;
+        case "ArrowRight":   // если нажата клавиша вправо
+            if(left < document.documentElement.clientWidth - 100)
+                blueRect.style.marginLeft = left + 10 + "px";
+            break;
+        case "ArrowDown":   // если нажата клавиша вниз
+            if(top < document.documentElement.clientHeight - 100)
+                blueRect.style.marginTop = top + 10 + "px";
+            break;
+    }
+}
+</script>
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>METANIT.COM</title>
+</head>
+<body>
+    <a id="link" href="https://uk.javascript.info/">JS</a>
+    <script>
+    const link = document.getElementById("link");
+ 
+    link.addEventListener("click", (e)=>{
+        console.log("Link has been clicked");
+        e.preventDefault();     // предупреждаем переход
+    });
+ 
+    const event = new MouseEvent("click", {cancelable:true});
+    link.dispatchEvent(event);
+    </script>
+</body>
+</html> -->
+
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>METANIT.COM</title>
+</head>
+<body>
+    <button id="btn">Pay</button>
+    <script>
+    const button = document.getElementById("btn");
+    const myAcc = new Account(100); // условный денежный счет
+    // устанавливаем обработчик события payment для всего документа
+    document.addEventListener("payment", ()=>console.log("Payment succeeded!"));
+ 
+    // по нажатию на кнопку выполняем метод pay
+    button.addEventListener("click", ()=>myAcc.pay(10));
+    // конструктор объекта счета
+    function Account(money) {
+        _money = money;
+        this.pay=function(sum){
+            if(_money >= sum){
+                _money -= sum;
+                console.log(_money);
+ 
+                const event = new Event("payment"); // определяем объект события
+                document.dispatchEvent(event);      // генерируем событие для всего документа
+            }
+        }
+    }
+    </script>
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+<form name="search">
+    <input type="text" name="key"></input>
+    <input type="submit" name="send" value="Отправить" />
+</form>
+<script>
+function sendForm(e){
+     
+    // получаем значение поля key
+    const keyBox = document.search.key;
+    const val = keyBox.value;
+    if(val.length<3){
+        alert("Недопустимая длина строки");
+        e.preventDefault();
+    }   
+    else
+        alert("Отправка разрешена");
+}
+ 
+const sendButton = document.search.send;
+sendButton.addEventListener("click", sendForm);
+</script>
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+<form name="search">
+    <input type="text" name="key" placeholder="Введите ключ"></input>
+    <input type="button" name="print" value="Печать" />
+</form>
+<div id="printBlock"></div>
+<script>
+function printForm(e){
+     
+    // получаем значение поля key
+    const keyBox = document.search.key;
+    const val = keyBox.value;
+    // получаем элемент printBlock
+    const printBlock = document.getElementById("printBlock");
+    // создаем новый параграф
+    const pElement = document.createElement("p");
+    // устанавливаем у него текст
+    pElement.textContent = val;
+    // добавляем параграф в printBlock
+    printBlock.appendChild(pElement);
+}
+ 
+const printButton = document.search.print;
+printButton.addEventListener("click", printForm);
+</script>
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+<form name="myForm">
+    <input type="radio" name="languages" value="Java" /><span>Java</span>
+    <input type="radio" name="languages" value="C#" /><span>C#</span>
+    <input type="radio" name="languages" value="C++" /><span>C++</span>
+</form>
+<div id="printBlock"></div>
+<script>
+const printBlock = document.getElementById("printBlock");
+const myForm = document.myForm;
+
+function onclick(e) {
+    printBlock.textContent = `Вы выбрали: ${e.target.value}`;
+}
+
+for (let i = 0; i < myForm.languages.length; i++) {
+    myForm.languages[i].addEventListener("click", onclick);
+}
+</script>
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+</head>
+<body>
+<form name="myForm">
+    <select name="language" size="4">
+        <option value="JS" selected="selected">JavaScript</option>
+        <option value="Java">Java</option>
+        <option value="CS">C#</option>
+        <option value="CPP">C++</option>
+    </select>
+</form>
+<script>
+const firstLanguage = document.myForm.language.options[0];
+console.log("Index:", firstLanguage.index);
+console.log("Text:", firstLanguage.text);
+console.log("Value:", firstLanguage.value);
+</script>
+</body>
+</html> -->
+<!-- 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>METANIT.COM</title>
+    <style>
+    input {width: 150px;}
+    input:invalid {border-color: red; }
+    input:valid { border-color: green;}
+    </style>
+</head>
+<body>
+<form id="registerForm" name="registerForm" method="post" action="register">
+<p>
+    <label for="username">Username:</label><br>
+    <input id="username" name="username" maxlength="20" minlength="3" required>
+</p>
+<p>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required>
+</p>
+<p>
+    <label for="age">Age:</label><br>
+    <input type="number" id="age" name="age" min="1" max="110" value="18">
+</p>
+<button type="submit" id="submit" name="submit">Register</button>
+</form>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>METANIT.COM</title>
+</head>
+<body>
+<input type="file" id="files" name="files[]" multiple />
+<div id="list"></div>
+<script>
+function printFiles(e) {  
+    const files = e.target.files;   // получаем все выбранные файлы  
+    let output = "";
+    for (let i = 0; i < files.length; i++) {        // Перебираем все выбранные файлы   
+        const file = files[i];      // Получаем файл 
+        console.log(file);
+        output += "<li><p><strong>" + file.name + "</strong></p>";
+        output += "<p>Type: " + file.type || "n/a</p>";
+        output += "<p>Size: " + file.size + " bytes</p>";   
+        output += "<p>Changed on: " +  file.lastModifiedDate.toLocaleDateString() + "</p></li>";  
+    } 
+    document.getElementById("list").innerHTML = "<ul>" + output + "</ul>";
+}
+document.getElementById("files").addEventListener("change", printFiles);
+</script>
+</body>
+</html>
