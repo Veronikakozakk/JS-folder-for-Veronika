@@ -1,3 +1,1 @@
-a = 'BAC'
-
-print (a)
+print('MM')
