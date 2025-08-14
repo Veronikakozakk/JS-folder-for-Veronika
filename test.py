@@ -1,1 +1,1 @@
-print('stash')
+print('st')
